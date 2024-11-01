@@ -69,8 +69,8 @@ A Flask-based web application for creating and managing study groups, featuring 
 
 1. Clone the repository
 ```bash
-git clone https://github.com/yourusername/study-group-app.git
-cd study-group-app
+git clone https://github.com/yourusername/StudyGroupApp.git
+cd StudyGroupApp
 ```
 
 2. Create and activate virtual environment
