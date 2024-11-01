@@ -1,0 +1,34 @@
+{# app/templates/groups/list.html #}
+{% extends "base.html" %}
+
+{% block content %}
+<div class="d-flex justify-content-between align-items-center mb-4">
+    <h2>Study Groups</h2>
+    <a href="{{ url_for('groups.create') }}" class="btn btn-primary">Create New Group</a>
+</div>
+
+<div class="row">
+    {% for group in groups %}
+    <div class="col-md-4 mb-4">
+        <div class="card">
+            <div class="card-body">
+                <h5 class="card-title">{{ group.name }}</h5>
+                <h6 class="card-subtitle mb-2 text-muted">{{ group.subject }}</h6>
+                <p class="card-text">{{ group.description[:100] }}{% if group.description|length > 100 %}...{% endif %}</p>
+                <div class="d-flex justify-content-between align-items-center">
+                    <small class="text-muted">Members: {{ group.members.count() }}</small>
+                    <div>
+                        {% if not current_user.group_memberships|selectattr('group_id', 'equalto', group.id)|list %}
+                        <form action="{{ url_for('groups.join', id=group.id) }}" method="POST" style="display: inline;">
+                            <button type="submit" class="btn btn-success btn-sm">Join</button>
+                        </form>
+                        {% endif %}
+                        <a href="{{ url_for('groups.details', id=group.id) }}" class="btn btn-outline-primary btn-sm">View Details</a>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    {% endfor %}
+</div>
+{% endblock %}

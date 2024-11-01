@@ -1,0 +1,123 @@
+{% extends "base.html" %}
+
+{% block content %}
+<!-- Hero Section -->
+<section class="bg-gradient-primary py-5">
+    <div class="container">
+        <div class="row align-items-center">
+            <div class="col-lg-6 pe-lg-5">
+                <span class="badge bg-primary mb-3">Beta Version</span>
+                <h1 class="display-4 fw-bold text-dark mb-4">
+                    Study Together
+                </h1>
+                <p class="lead text-secondary mb-4">
+                    This is a simple platform I built as a personal project for me and my friends to organize our study sessions.
+                </p>
+                <div class="d-grid gap-3 d-sm-flex">
+                    {% if not current_user.is_authenticated %}
+                        <a href="{{ url_for('auth.register') }}" class="btn btn-primary btn-lg px-4">
+                            Register
+                        </a>
+                        <a href="{{ url_for('auth.login') }}" class="btn btn-outline-secondary btn-lg px-4">
+                            Sign In
+                        </a>
+                    {% else %}
+                        <a href="{{ url_for('groups.list') }}" class="btn btn-primary btn-lg px-4">
+                            Go to Groups
+                        </a>
+                    {% endif %}
+                </div>
+            </div>
+            <div class="col-lg-6 mt-5 mt-lg-0">
+                <div class="text-center position-relative">
+                    <div class="gradient-circle"></div>
+                    <div class="display-1 emoji-container">
+                        🎓
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
+
+<!-- Features Section -->
+<section class="py-5">
+    <div class="container">
+        <h2 class="text-center h3 mb-4">What You Can Do Here</h2>
+
+        <div class="row g-4">
+            <div class="col-md-4">
+                <div class="card h-100 border-0 shadow-sm">
+                    <div class="card-body p-4">
+                        <div class="text-primary mb-3" style="font-size: 24px;">
+                            👥
+                        </div>
+                        <h3 class="h5 mb-3">Create Study Groups</h3>
+                        <p class="text-secondary mb-0">Creating and managing study groups, featuring real-time chat functionality.</p>
+                    </div>
+                </div>
+            </div>
+            <div class="col-md-4">
+                <div class="card h-100 border-0 shadow-sm">
+                    <div class="card-body p-4">
+                        <div class="text-primary mb-3" style="font-size: 24px;">
+                            📅
+                        </div>
+                        <h3 class="h5 mb-3">Schedule Sessions</h3>
+                        <p class="text-secondary mb-0">Interactive session scheduling, and RSVP management.</p>
+                    </div>
+                </div>
+            </div>
+            <div class="col-md-4">
+                <div class="card h-100 border-0 shadow-sm">
+                    <div class="card-body p-4">
+                        <div class="text-primary mb-3" style="font-size: 24px;">
+                            🤝
+                        </div>
+                        <h3 class="h5 mb-3">Study Together</h3>
+                        <p class="text-secondary mb-0">Collaborate effectively using tools for group organization, communication, and session coordination.</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
+
+<!-- How to Use Section -->
+<section class="py-5 bg-light">
+    <div class="container">
+        <h2 class="text-center h3 mb-4">Super Easy to Use</h2>
+
+        <div class="row justify-content-center">
+            <div class="col-lg-8">
+                <div class="card border-0 shadow-sm">
+                    <div class="card-body p-4">
+                        <div class="d-flex mb-3">
+                            <div class="step-circle-small me-3">1</div>
+                            <div>
+                                <h5 class="mb-1">Sign up real quick</h5>
+                                <p class="text-secondary mb-0">Just need your name and email</p>
+                            </div>
+                        </div>
+                        <div class="d-flex mb-3">
+                            <div class="step-circle-small me-3">2</div>
+                            <div>
+                                <h5 class="mb-1">Find or create a group</h5>
+                                <p class="text-secondary mb-0">Join your friends' groups or start your own</p>
+                            </div>
+                        </div>
+                        <div class="d-flex">
+                            <div class="step-circle-small me-3">3</div>
+                            <div>
+                                <h5 class="mb-1">Start studying together</h5>
+                                <p class="text-secondary mb-0">Schedule sessions and manage RSVPs</p>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
+
+{% endblock %}

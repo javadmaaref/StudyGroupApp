@@ -1,0 +1,126 @@
+{# app/templates/auth/profile.html #}
+{% extends "base.html" %}
+
+{% block content %}
+<div class="row">
+    <!-- Profile Info -->
+    <div class="col-md-8">
+        <div class="card mb-4">
+            <div class="card-header">
+                <h4 class="mb-0">Profile Settings</h4>
+            </div>
+            <div class="card-body">
+                <form method="POST">
+                    {{ form.hidden_tag() }}
+                    <div class="mb-3">
+                        {{ form.username.label(class="form-label") }}
+                        {{ form.username(class="form-control") }}
+                        {% for error in form.username.errors %}
+                            <span class="text-danger">{{ error }}</span>
+                        {% endfor %}
+                    </div>
+                    <div class="mb-3">
+                        {{ form.email.label(class="form-label") }}
+                        {{ form.email(class="form-control") }}
+                        {% for error in form.email.errors %}
+                            <span class="text-danger">{{ error }}</span>
+                        {% endfor %}
+                    </div>
+                    <hr>
+                    <h5 class="mb-3">Change Password</h5>
+                    <div class="mb-3">
+                        {{ form.current_password.label(class="form-label") }}
+                        {{ form.current_password(class="form-control") }}
+                    </div>
+                    <div class="mb-3">
+                        {{ form.new_password.label(class="form-label") }}
+                        {{ form.new_password(class="form-control") }}
+                    </div>
+                    <div class="mb-3">
+                        {{ form.confirm_password.label(class="form-label") }}
+                        {{ form.confirm_password(class="form-control") }}
+                    </div>
+                    {{ form.submit(class="btn btn-primary") }}
+                </form>
+            </div>
+        </div>
+    </div>
+
+    <!-- Activity Sidebar -->
+    <div class="col-md-4">
+        <!-- Groups You Own -->
+        <div class="card mb-4">
+            <div class="card-header">
+                <h5 class="mb-0">Groups You Own</h5>
+            </div>
+            <div class="card-body">
+                {% if my_groups %}
+                    <div class="list-group">
+                        {% for group in my_groups %}
+                            <a href="{{ url_for('groups.details', id=group.id) }}" 
+                               class="list-group-item list-group-item-action d-flex justify-content-between align-items-center">
+                                {{ group.name }}
+                                <span class="badge bg-primary rounded-pill">
+                                    {{ group.members.count() }} members
+                                </span>
+                            </a>
+                        {% endfor %}
+                    </div>
+                {% else %}
+                    <p class="text-muted mb-0">You don't own any groups yet.</p>
+                {% endif %}
+            </div>
+        </div>
+
+        <!-- Groups You're In -->
+        <div class="card mb-4">
+            <div class="card-header">
+                <h5 class="mb-0">Groups You're In</h5>
+            </div>
+            <div class="card-body">
+                {% if member_of %}
+                    <div class="list-group">
+                        {% for group in member_of %}
+                            <a href="{{ url_for('groups.details', id=group.id) }}" 
+                               class="list-group-item list-group-item-action d-flex justify-content-between align-items-center">
+                                {{ group.name }}
+                                <span class="badge bg-secondary rounded-pill">Member</span>
+                            </a>
+                        {% endfor %}
+                    </div>
+                {% else %}
+                    <p class="text-muted mb-0">You haven't joined any groups yet.</p>
+                {% endif %}
+            </div>
+        </div>
+
+        <!-- Recent Activity -->
+        <div class="card">
+            <div class="card-header">
+                <h5 class="mb-0">Recent Activity</h5>
+            </div>
+            <div class="card-body">
+                {% if recent_messages %}
+                    <div class="list-group">
+                        {% for message in recent_messages %}
+                            <div class="list-group-item">
+                                <div class="d-flex w-100 justify-content-between">
+                                    <small class="text-muted">
+                                        In {{ message.study_group.name }}
+                                    </small>
+                                    <small class="text-muted">
+                                        {{ message.timestamp.strftime('%Y-%m-%d %H:%M') }}
+                                    </small>
+                                </div>
+                                <p class="mb-0 text-truncate">{{ message.content }}</p>
+                            </div>
+                        {% endfor %}
+                    </div>
+                {% else %}
+                    <p class="text-muted mb-0">No recent activity.</p>
+                {% endif %}
+            </div>
+        </div>
+    </div>
+</div>
+{% endblock %}

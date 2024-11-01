@@ -1,0 +1,47 @@
+{# app/templates/groups/chat.html #}
+{% extends "base.html" %}
+
+{% block content %}
+<div class="row">
+    <div class="col-md-3">
+        <div class="card mb-3">
+            <div class="card-header">
+                <h5 class="mb-0">{{ group.name }}</h5>
+            </div>
+            <div class="card-body">
+                <p class="mb-2"><strong>Subject:</strong> {{ group.subject }}</p>
+                <p class="mb-0"><strong>Members:</strong> {{ group.members.count() }}</p>
+            </div>
+        </div>
+        <div class="d-grid">
+            <a href="{{ url_for('groups.details', id=group.id) }}" class="btn btn-outline-primary">Back to Group</a>
+        </div>
+    </div>
+    
+    <div class="col-md-9">
+        <div class="card chat-card">
+            <div class="card-header">
+                <h5 class="mb-0">Group Chat</h5>
+            </div>
+            <div class="card-body chat-messages" id="chatMessages">
+                <!-- Messages will be loaded here by JavaScript -->
+            </div>
+            <div class="card-footer">
+                <form id="chatForm" method="POST" class="d-flex gap-2">
+                    <input type="text" name="message" class="form-control" placeholder="Type your message..." required autocomplete="off">
+                    <button type="submit" class="btn btn-primary">Send</button>
+                </form>
+            </div>
+        </div>
+    </div>
+</div>
+{% endblock %}
+
+{% block scripts %}
+<script src="{{ url_for('static', filename='js/chat.js') }}"></script>
+<script>
+    document.addEventListener('DOMContentLoaded', function() {
+        new ChatManager({{ group.id }});
+    });
+</script>
+{% endblock %}
